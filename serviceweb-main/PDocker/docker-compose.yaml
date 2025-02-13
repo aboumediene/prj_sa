@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./nginx
+    container_name: mynginx
+    ports:
+      - "80:80"
+    depends_on:
+      - wordpress
+
+  wordpress:
+    build: ./wordpress
+    container_name: wordpress
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: moi
+      WORDPRESS_DB_PASSWORD: aacher
+      WORDPRESS_DB_NAME: worddb
+    depends_on:
+      - mariadb
+#    ports:
+ #     - "9000:80"
+
+
+  mariadb:
+    build: ./mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: aacherplusfort
+      MYSQL_DATABASE: worddb
+      MYSQL_USER: moi
+      MYSQL_PASSWORD: aacher
